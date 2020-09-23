@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../protogenie/schema.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<config>
+	<!-- Randomly adds uppercase to input
+	-->
+   <output column_marker="TAB">
+      <header name="default" />
+   </output>
+   <postprocessing>
+      <capitalize column-token="token" column-lemma="lemma">
+         <first-word when="ratio" ratio="0.7">
+            <sentence-marker name="empty_line"/>
+         </first-word>
+         <first-letters when="ratio" ratio="0.05"/>
+      </capitalize>
+   </postprocessing>
+   <memory path="memory-latin-uppercase.csv" />
+   <default-header>
+      <header type="explicit">
+         <key>token</key>
+         <key>lemma</key>
+         <key>pos</key>
+         <key>Dis</key>
+         <key>Entity</key>
+         <key>Gend</key>
+         <key>Numb</key>
+         <key>Case</key>
+         <key>Deg</key>
+         <key>Mood_Tense_Voice</key>
+         <key>Person</key>
+      </header>
+   </default-header>
+   <corpora>
+      <corpus path="./latin/*.tsv" column_marker="TAB">
+         <splitter name="empty_line"/>
+         <header type="default" />
+      </corpus>
+   </corpora>
+</config>

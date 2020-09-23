@@ -19,16 +19,16 @@ import argparse
 here = os.path.dirname(os.path.abspath(__file__))
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--input", help="Input folder", default=os.path.join(here, "..", "OUTPUT", "step-1"))
-parser.add_argument("--output", help="Output folder", default=os.path.join(here, "..", "OUTPUT", "step-2"))
+parser.add_argument("--input", help="Input folder", default=os.path.join(here, "..", "OUTPUT", "step-01"))
+parser.add_argument("--output", help="Output folder", default=os.path.join(here, "..", "OUTPUT", "step-02"))
 parser.add_argument("--tense", help="Tense file", default=os.path.join(here, "tense.tsv"))
 args = parser.parse_args()
-inp, out, tense = args.input, args.output, args.tense
+dir_inp, dir_out, tense_file = args.input, args.output, args.tense
 
-os.makedirs(args.input, exist_ok=True)
+os.makedirs(dir_out, exist_ok=True)
 
 comps = []
-with open("tenses.tsv") as f:
+with open(tense_file) as f:
 	for line in f:
 		try:
 			tense, composed = line.strip().split("\t")
@@ -39,8 +39,8 @@ with open("tenses.tsv") as f:
 
 print(comps)
 
-for file in glob.glob("mood-tense-voice/*.tsv"):
-	with open(file.replace("mood-tense-voice", "mood-tense-voice-pft"), "w") as o:
+for file in glob.glob(os.path.join(dir_inp, "*.tsv")):
+	with open(file.replace(dir_inp, dir_out), "w") as o:
 		with open(file) as i:
 			for line_no, line in enumerate(i):
 				if line.strip():

@@ -2,101 +2,101 @@
 <?xml-model href="https://hipster-philology.github.io/protogenie/protogenie/schema.rng"
      schematypens="http://relaxng.org/ns/structure/1.0"?>
 <config>
-    <output column_marker="TAB">
-        <header name="order">
-            <key>token</key>
-            <key>lemma</key>
-            <key>pos</key>
-            <key>Dis</key>
-            <key>Entity</key>
-            
-            <key>Gend</key>
-            <key>Numb</key>
-            <key>Case</key>
-            <key>Deg</key>
-            
-            <key>Mood_Tense_Voice</key>
-            
-            <key>Person</key>
-        </header>
-    </output>
-    <postprocessing>
-        <disambiguation matchPattern="_(\d+)$" new-column="Dis" source="lemma" default="_" /> <!-- Extract disambiguation -->
-        
-        <disambiguation matchPattern="_([a-zA-Z])$" new-column="Entity" source="lemma" default="_" /> <!-- Extract disambiguation -->
-        
-        <disambiguation matchPattern="Gend\=([\w-]+)\|?" new-column="Gend" source="morph" default="_" />
-        <disambiguation matchPattern="Numb\=([\w-]+)\|?" new-column="Numb" source="morph" default="_" />
-        <disambiguation matchPattern="Case\=([\w-]+)\|?" new-column="Case" source="morph" default="_" />
-        <disambiguation matchPattern="Deg\=([\w-]+)\|?" new-column="Deg" source="morph" default="_" />
-        <disambiguation matchPattern="Person\=([\w-]+)\|?" new-column="Person" source="morph" default="_" />
-        
-        <disambiguation matchPattern="Mood\=([\w-]+)\|Tense\=([\w-]+)\|Voice\=([\w-]+)\|?" new-column="Mood_Tense_Voice" source="morph" default="_" glue="|" />
-        
-        <replacement matchPattern="(XXC)" replacementPattern="LXXX">
-            <applyTo source="token">
-                <target>token</target>
-            </applyTo>
-        </replacement>
-        
-        <replacement matchPattern="(IIX)" replacementPattern="VIII">
-            <applyTo source="token">
-                <target>token</target>
-            </applyTo>
-        </replacement>
-        
-        <toolbox name="RomanNumeral" matchPattern="^(M{1,4}(CM|CD|D?C{0,4})(XC|XL|L?X{0,4})(IX|IV|V?I{0,4})|M{0,4}(CM|C?D|D?C{1,4})(XC|XL|L?X{0,4})(IX|IV|V?I{0,4})|M{0,4}(CM|CD|D?C{0,4})(XC|X?L|L?X{1,4})(IX|IV|V?I{0,4})|M{0,4}(CM|CD|D?C{0,4})(XC|XL|L?X{0,4})(IX|I?V|V?I{1,4}))$">
-            <applyTo source="token">
-                <target>lemma</target>
-                <target>token</target>
-            </applyTo>
-        </toolbox>
-        
-        <replacement matchPattern="\." replacementPattern="">
-            <applyTo source="token">
-                <target>token</target>
-            </applyTo>
-        </replacement>
-        
-        
-        <replacement matchPattern="$^" replacementPattern="_">
-            <applyTo source="morph">
-                <target>morph</target>
-            </applyTo>
-        </replacement>
-
-        <skip matchPattern="^\W+$" source="token" /> <!-- Remove ponctuation lines -->
-
-        <replacement matchPattern="(\d+)$" replacementPattern="">
-            <applyTo source="pos">
-                <target>pos</target>
-            </applyTo>
-        </replacement>
-        
-        <replacement matchPattern="(V)" replacementPattern="u">
-            <applyTo source="token">
-                <target>token</target>
-            </applyTo>
-            <applyTo source="lemma">
-                <target>lemma</target>
-            </applyTo>
-        </replacement>
-
-    </postprocessing>
-    <default-header>
-        <header type="explicit">
-            <key map-to="token">form</key>
-            <key>lemma</key>
-            <key>morph</key>
-            <key>pos</key>
-            <key>index</key>
-        </header>
-    </default-header>
-    <memory path="memory_$file$.csv"/>
-    <corpora>
-        <corpus path="./TSV/*.tsv" column_marker="TAB">
-            <splitter name="empty_line" />
-            <header type="default"/>
-        </corpus>
-    </corpora>
+   <output column_marker="TAB">
+      <header name="order">
+         <key>token</key>
+         <key>lemma</key>
+         <key>pos</key>
+         <key>Dis</key>
+         <key>Entity</key>
+         
+         <key>Gend</key>
+         <key>Numb</key>
+         <key>Case</key>
+         <key>Deg</key>
+         
+         <key>Mood_Tense_Voice</key>
+         
+         <key>Person</key>
+      </header>
+   </output>
+   <postprocessing>
+      <disambiguation matchPattern="_(\d+)$" new-column="Dis" source="lemma" default="_" /> <!-- Extract disambiguation -->
+      
+      <disambiguation matchPattern="_([a-zA-Z])$" new-column="Entity" source="lemma" default="_" /> <!-- Extract disambiguation -->
+      
+      <disambiguation matchPattern="Gend\=([\w-]+)\|?" new-column="Gend" source="morph" default="_" />
+      <disambiguation matchPattern="Numb\=([\w-]+)\|?" new-column="Numb" source="morph" default="_" />
+      <disambiguation matchPattern="Case\=([\w-]+)\|?" new-column="Case" source="morph" default="_" />
+      <disambiguation matchPattern="Deg\=([\w-]+)\|?" new-column="Deg" source="morph" default="_" />
+      <disambiguation matchPattern="Person\=([\w-]+)\|?" new-column="Person" source="morph" default="_" />
+      
+      <disambiguation matchPattern="Mood\=([\w-]+)\|Tense\=([\w-]+)\|Voice\=([\w-]+)\|?" new-column="Mood_Tense_Voice" source="morph" default="_" glue="|" />
+      
+      <replacement matchPattern="(XXC)" replacementPattern="LXXX">
+         <applyTo source="token">
+            <target>token</target>
+         </applyTo>
+      </replacement>
+      
+      <replacement matchPattern="(IIX)" replacementPattern="VIII">
+         <applyTo source="token">
+            <target>token</target>
+         </applyTo>
+      </replacement>
+      
+      <toolbox name="RomanNumeral" matchPattern="^(M{1,4}(CM|CD|D?C{0,4})(XC|XL|L?X{0,4})(IX|IV|V?I{0,4})|M{0,4}(CM|C?D|D?C{1,4})(XC|XL|L?X{0,4})(IX|IV|V?I{0,4})|M{0,4}(CM|CD|D?C{0,4})(XC|X?L|L?X{1,4})(IX|IV|V?I{0,4})|M{0,4}(CM|CD|D?C{0,4})(XC|XL|L?X{0,4})(IX|I?V|V?I{1,4}))$">
+         <applyTo source="token">
+            <target>lemma</target>
+            <target>token</target>
+         </applyTo>
+      </toolbox>
+      
+      <replacement matchPattern="\." replacementPattern="">
+         <applyTo source="token">
+            <target>token</target>
+         </applyTo>
+      </replacement>
+      
+      
+      <replacement matchPattern="$^" replacementPattern="_">
+         <applyTo source="morph">
+            <target>morph</target>
+         </applyTo>
+      </replacement>
+      
+      <skip matchPattern="^\W+$" source="token" /> <!-- Remove ponctuation lines -->
+      
+      <replacement matchPattern="(\d+)$" replacementPattern="">
+         <applyTo source="pos">
+            <target>pos</target>
+         </applyTo>
+      </replacement>
+      
+      <replacement matchPattern="(V)" replacementPattern="u">
+         <applyTo source="token">
+            <target>token</target>
+         </applyTo>
+         <applyTo source="lemma">
+            <target>lemma</target>
+         </applyTo>
+      </replacement>
+      
+   </postprocessing>
+   <default-header>
+      <header type="explicit">
+         <key map-to="token">form</key>
+         <key>lemma</key>
+         <key>morph</key>
+         <key>pos</key>
+         <key>index</key>
+      </header>
+   </default-header>
+   <memory path="memory_$file$.csv"/>
+   <corpora>
+      <corpus path="../LASLA-CONVERTED-TSV/*.tsv" column_marker="TAB">
+         <splitter name="empty_line" />
+         <header type="default"/>
+      </corpus>
+   </corpora>
 </config>
